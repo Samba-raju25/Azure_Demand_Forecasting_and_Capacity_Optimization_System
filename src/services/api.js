@@ -1,25 +1,29 @@
-const BASE_URL = "https://your-backend-api-url.com"; // replace with real backend
+const BASE_URL = 'http://your-backend-host'; // or import from env
 
-export async function fetchCpuUsage() {
-  const res = await fetch(`${BASE_URL}/api/cpu-usage`);
-  if (!res.ok) throw new Error("Failed to fetch CPU usage");
+export async function getForecast(params) {
+  const query = new URLSearchParams(params).toString();
+  const res = await fetch(`${BASE_URL}/api/forecast?${query}`);
+  if (!res.ok) throw new Error('Failed to load forecast');
   return res.json();
 }
 
-export async function fetchComparison() {
-  const res = await fetch(`${BASE_URL}/api/comparison`);
-  if (!res.ok) throw new Error("Failed to fetch comparison data");
+export async function getCapacityPlanning(params) {
+  const query = new URLSearchParams(params).toString();
+  const res = await fetch(`${BASE_URL}/api/capacity-planning?${query}`);
+  if (!res.ok) throw new Error('Failed to load capacity');
   return res.json();
 }
 
-export async function fetchSeasonal() {
-  const res = await fetch(`${BASE_URL}/api/seasonal`);
-  if (!res.ok) throw new Error("Failed to fetch seasonal data");
-  return res.json();
+export async function downloadReport(params) {
+  const query = new URLSearchParams(params).toString();
+  const res = await fetch(`${BASE_URL}/api/report?${query}`);
+  if (!res.ok) throw new Error('Failed to download report');
+  return res.blob();
 }
 
-export async function fetchInsights() {
-  const res = await fetch(`${BASE_URL}/api/insights`);
-  if (!res.ok) throw new Error("Failed to fetch insights");
+export async function getMonitoring(params) {
+  const query = new URLSearchParams(params).toString();
+  const res = await fetch(`${BASE_URL}/api/monitoring?${query}`);
+  if (!res.ok) throw new Error('Failed to load monitoring data');
   return res.json();
 }

@@ -31,7 +31,7 @@ import IntroPage from "./pages/IntroPage";
 import ModelMonitoring from "./pages/ModelMonitoring";
 import MultiRegionDashboard from "./pages/MultiRegionDashboard";
 
-/* ------------ ALERT HELPER (STEP 3) ------------ */
+/* ------------ ALERT HELPER ------------ */
 
 export function showHighRiskAlert({ resource, usage, threshold }) {
   toast.error(
@@ -422,7 +422,6 @@ function DashboardLayout() {
         return (
           <>
             <IntroPage onForecastSubmit={handleForecastFormSubmit} />
-            {/* KPIs Section */}
             <div className="bg-[#f7f7f5] dark:bg-gradient-to-br dark:from-fuchsia-600 dark:to-orange-400 border border-[#b7d2f7] dark:border-none rounded-xl shadow mb-8 px-5 py-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {kpiData.map(({ title, value, delta, subtitle }, idx) => (
@@ -436,7 +435,6 @@ function DashboardLayout() {
                 ))}
               </div>
             </div>
-            {/* Chart Grid: 2x2 */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
               <div className="bg-[#f7f7f5] dark:bg-gradient-to-br dark:from-fuchsia-600 dark:to-orange-400 border border-[#b7d2f7] dark:border-none rounded-xl shadow px-6 py-6">
                 <BarComparisonChart data={barChartData} />
@@ -504,25 +502,16 @@ function DashboardLayout() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[#fffff0] dark:bg-gray-900 transition-all duration-500">
+    <div className="h-screen bg-[#fffff0] dark:bg-gray-900 transition-all duration-500 flex flex-col">
       <Header />
-      <div className="flex flex-1">
+
+      {/* Sidebar + main layout; only main scrolls */}
+      <div className="flex flex-1 overflow-hidden">
         <Sidebar onSelect={setSelectedPage} />
-        <main className="flex-1 overflow-y-auto px-4 py-6 md:px-8 md:py-10">
+        <main className="flex-1 h-full overflow-y-auto px-4 py-6 md:px-8 md:py-10">
           {renderContent()}
         </main>
       </div>
-
-      {/* Floating assistant button */}
-      <button
-        onClick={() => setIsChatOpen(true)}
-        className="fixed bottom-4 right-4 rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 dark:from-fuchsia-600 dark:to-orange-400 text-white p-3 shadow-xl flex items-center gap-2"
-      >
-        <span className="text-sm font-semibold">Ask Assistant</span>
-      </button>
-
-      {/* Chat assistant panel */}
-      <ChatAssistant isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
 
       {/* Global toast container for alerts */}
       <ToastContainer position="top-right" autoClose={5000} />

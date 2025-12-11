@@ -60,8 +60,11 @@ export default function Sidebar({ onSelect }) {
     return item.name.toLowerCase().includes(term);
   });
 
+  // Important: lock body scroll ONLY on mobile when sidebar is open
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "auto";
+    if (window.innerWidth < 1024) {
+      document.body.style.overflow = isOpen ? "hidden" : "auto";
+    }
   }, [isOpen]);
 
   return (
@@ -69,8 +72,8 @@ export default function Sidebar({ onSelect }) {
       {/* Mobile Toggle */}
       <button
         className="lg:hidden fixed top-5 left-5 z-50 text-white bg-gradient-to-br 
-           from-[#b7d2f7] to-[#225577] p-3 rounded-xl shadow-lg transition-all 
-           duration-300 hover:scale-105 focus:outline-none"
+          from-[#b7d2f7] to-[#225577] p-3 rounded-xl shadow-lg transition-all 
+          duration-300 hover:scale-105 focus:outline-none"
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? <X size={20} /> : <Menu size={20} />}
@@ -78,7 +81,7 @@ export default function Sidebar({ onSelect }) {
 
       {/* Sidebar */}
       <aside
-        className={`group fixed lg:static top-0 left-0 h-full w-72 lg:w-24 hover:lg:w-72 
+        className={`group fixed lg:static top-0 left-0 h-screen w-72 lg:w-24 hover:lg:w-72 
           bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-gray-100 px-5 py-5 shadow-2xl 
           border-r border-gray-800 flex flex-col justify-between transform 
           transition-all duration-300 ease-in-out z-40 
@@ -89,7 +92,7 @@ export default function Sidebar({ onSelect }) {
           <div className="flex items-center justify-center gap-3 mb-4">
             <div
               className="w-11 h-11 flex items-center justify-center rounded-2xl 
-                 bg-gradient-to-br from-[#b7d2f7] to-[#225577] shadow-lg border border-white/10"
+                bg-gradient-to-br from-[#b7d2f7] to-[#225577] shadow-lg border border-white/10"
             >
               <span className="text-lg font-extrabold text-white">A</span>
             </div>
